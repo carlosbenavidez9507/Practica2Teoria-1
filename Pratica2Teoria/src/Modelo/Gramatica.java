@@ -157,7 +157,7 @@ public class Gramatica {
             int aux;
             ArrayList<Terminal> conjuntoK;
             while (k < indexProducciones.length) {
-                aux= indexProducciones[k];
+                aux = indexProducciones[k];
                 conjuntoK = this.getConjuntoSeleccion(aux);
                 if (k != i) {//Solo compara con los conjuntos de seleccion diferentes a el 
                     comparacion = this.tieneTerminalIgual(conjuntoK, conjuntoSeleccioni);
@@ -212,7 +212,6 @@ public class Gramatica {
                 }
                 j++;
             }
-
             if (m != 0) {
                 if (p.getLadoDerecho().get(j).esTerminal()) { //Si el ultimo simbolo es terminal retorne false
                     return false;
@@ -231,6 +230,42 @@ public class Gramatica {
             sonDisyuntos = this.sonDisyuntosConjuntosSeleccion(produccionesTerminalJ);
             if (!sonDisyuntos) {
                 return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean esGramaticaS() {
+        int n = this.noTerminales.size();
+        boolean sonIguales;
+        Simbolo aux;
+        for (int j = 0; j < n; j++) {//recorrer el Array de NoTerminales que en cada posición contiene las producciones de esa terminal
+            int[] produccionesTerminalJ = this.prdNoTerminales.get(j);//producciones por el No terminal j
+            int m = produccionesTerminalJ.length;
+            int i = 0;
+            while (i < m) {
+                aux = this.producciones.get(produccionesTerminalJ[i]).getLadoDerecho().get(0);//obtiene el primer simbolo de la produccion i que se encuentra en producciones por no terminal j
+                if (!aux.esTerminal()) {
+                    return false;
+                }
+                int k = 0;
+                Simbolo y;
+                while (k < m) {
+                    if (k != i) {
+                        y = this.producciones.get(produccionesTerminalJ[k]).getLadoDerecho().get(0);
+                        //Machetazo para comparar dos terminales con el metodo existente
+                        ArrayList<Terminal> auxT1 = new ArrayList<>();
+                        ArrayList<Terminal> auxT2 = new ArrayList<>();
+                        auxT1.add((Terminal) aux);
+                        auxT2.add((Terminal) y);
+                        sonIguales = this.tieneTerminalIgual(auxT1, auxT2);
+                        if (sonIguales) {
+                            return false;
+                        }
+                    }
+                    k++;
+                }
+                i++;
             }
         }
         return true;

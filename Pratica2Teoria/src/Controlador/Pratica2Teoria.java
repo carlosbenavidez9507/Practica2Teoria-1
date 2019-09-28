@@ -65,7 +65,7 @@ public class Pratica2Teoria {
 
         ArrayList<NoTerminal> noTerminales = new ArrayList<>();
         noTerminales.add(NTA);
-//        noTerminales.add(NTB);
+        noTerminales.add(NTB);
 
         Terminal t1 = new Terminal("1");
         Terminal t2 = new Terminal("2");
@@ -73,11 +73,15 @@ public class Pratica2Teoria {
         Terminal t4 = new Terminal("4");
 
         ArrayList<Simbolo> ladoDerecho = new ArrayList<>();
-        ladoDerecho.add(t1);
+        ladoDerecho.add(t4);
         ladoDerecho.add(NTB);
 
+        ArrayList<Simbolo> ladoDerecho3 = new ArrayList<>();
+        ladoDerecho3.add(t3);
+        ladoDerecho3.add(NTB);
+
         ArrayList<Simbolo> ladoDerecho2 = new ArrayList<>();
-        ladoDerecho2.add(t2);
+        ladoDerecho2.add(t4);
         ladoDerecho2.add(t2);
         ladoDerecho2.add(NTA);
 
@@ -88,11 +92,13 @@ public class Pratica2Teoria {
 
         ArrayList<Terminal> s2 = new ArrayList<>();
         s2.add(t3);
-        s2.add(t2);
+        s2.add(t4);
         s1.add(null);
 
         Produccion p1 = new Produccion(NTA, ladoDerecho);
         Produccion p2 = new Produccion(NTA, ladoDerecho2);
+        Produccion p3 = new Produccion(NTB, ladoDerecho);
+        Produccion p4 = new Produccion(NTB, ladoDerecho3);
         p1.setConjuntoSeleccion(s1);
         p2.setConjuntoSeleccion(s2);
 
@@ -101,19 +107,28 @@ public class Pratica2Teoria {
         ArrayList<Produccion> producciones = new ArrayList<>();
         producciones.add(p1);
         producciones.add(p2);
+        producciones.add(p3);
+        producciones.add(p4);
 
         Gramatica g = new Gramatica(noTerminales, producciones);
 
         int[] indexPT = new int[2];
         indexPT[0] = 0;
         indexPT[1] = 1;
+     
+
+        int[] indexPT2 = new int[2];
+        indexPT2[0] = 2;
+        indexPT2[1] = 3;
 
         ArrayList<int[]> aux = new ArrayList<>();
         aux.add(indexPT);
+        aux.add(indexPT2);
 
         g.setPrdNoTerminales(aux);
 
-        System.out.println(g.esGramaticaLL1());
+//        System.out.println(g.esGramaticaLL1());
+        System.out.println(g.esGramaticaS());
 
     }
 
