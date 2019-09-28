@@ -36,56 +36,56 @@ public class Archivo {
         }
     }
 
-    public Gramatica convertirCadenaGramatica(String cadena) {
-        Gramatica gramatica = new Gramatica();
-
-        String[] x = cadena.split("\n");
-
-        ArrayList<String> listadoNoterminales = new ArrayList<>();
-        ArrayList<String> listadoProducciones=new ArrayList<>();
-        ArrayList<NoTerminal> listadoSimbolos = new ArrayList<>();
-        ArrayList<Produccion> lp=new ArrayList<>();
-
-        for (int i = 0; i < x.length; i++) {
-           
-            Produccion produccion=new Produccion();
-            listadoProducciones.add(x[i]);
-            String hilera[] = x[i].split(":");
-            listadoNoterminales.add(hilera[0]);
-            produccion.setLefSide(hilera[0]);
-            produccion.setRightSide(hilera[1]);
-            lp.add(produccion);
-           
-
-        }
-
-        Set<String> hashSet = new HashSet<String>(listadoNoterminales);
-
-        listadoNoterminales.clear();
-        listadoNoterminales.addAll(hashSet);
-        int i = 0;
-        for (String s : listadoNoterminales) {
-
-            NoTerminal simbolo = new NoTerminal();
-
-            if (i == 0) {
-                simbolo.setNombreNoTerminal(s);
-                simbolo.setEsSimoboloInicial(true);
-            } else {
-                simbolo.setNombreNoTerminal(s);
-                simbolo.setEsSimoboloInicial(false);
-            }
-            i++;
-
-            listadoSimbolos.add(simbolo);
-        }
-
-        gramatica.agregarNoterminal(listadoSimbolos);
-        gramatica.agregarProducciones(lp);
-
-        return gramatica;
-    }
-    
+//    public Gramatica convertirCadenaGramatica(String cadena) {
+//        Gramatica gramatica = new Gramatica();
+//
+//        String[] x = cadena.split("\n");
+//
+//        ArrayList<String> listadoNoterminales = new ArrayList<>();
+//        ArrayList<String> listadoProducciones=new ArrayList<>();
+//        ArrayList<NoTerminal> listadoSimbolos = new ArrayList<>();
+//        ArrayList<Produccion> lp=new ArrayList<>();
+//
+//        for (int i = 0; i < x.length; i++) {
+//           
+//            Produccion produccion=new Produccion();
+//            listadoProducciones.add(x[i]);
+//            String hilera[] = x[i].split(":");
+//            listadoNoterminales.add(hilera[0]);
+////            produccion.setLefSide(hilera[0]);
+////            produccion.setRightSide(hilera[1]);
+//            lp.add(produccion);
+//           
+//
+//        }
+//
+//        Set<String> hashSet = new HashSet<String>(listadoNoterminales);
+//
+//        listadoNoterminales.clear();
+//        listadoNoterminales.addAll(hashSet);
+//        int i = 0;
+//        for (String s : listadoNoterminales) {
+//
+//            NoTerminal simbolo = new NoTerminal();
+//
+//            if (i == 0) {
+//                simbolo.setNombreNoTerminal(s);
+//                simbolo.setEsSimoboloInicial(true);
+//            } else {
+//                simbolo.setNombreNoTerminal(s);
+//                simbolo.setEsSimoboloInicial(false);
+//            }
+//            i++;
+//
+//            listadoSimbolos.add(simbolo);
+//        }
+//
+//        gramatica.agregarNoterminal(listadoSimbolos);
+//        gramatica.agregarProducciones(lp);
+//
+//        return gramatica;
+//    }
+//    
     
     
 }

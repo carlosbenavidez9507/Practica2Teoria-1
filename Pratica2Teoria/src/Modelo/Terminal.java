@@ -11,16 +11,22 @@ package Modelo;
  */
 public class Terminal implements Simbolo{
     
-    private Object nombreTermila;
+    private String nombreTermila;
 
     public Terminal() {
     }
 
-    public Object getNombreTermila() {
+    public Terminal(String nombreTermila) {
+        this.nombreTermila = nombreTermila;
+    }
+    
+    
+
+    public String getNombreTermila() {
         return nombreTermila;
     }
 
-    public void setNombreTermila(Object nombreTermila) {
+    public void setNombreTermila(String nombreTermila) {
         this.nombreTermila = nombreTermila;
     }
 

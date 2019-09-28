@@ -21,6 +21,12 @@ public class NoTerminal implements Simbolo {
     public NoTerminal() {
     }
 
+    public NoTerminal(String nombreNoTerminal) {
+        this.nombreNoTerminal = nombreNoTerminal;
+    }
+    
+    
+
     public String getNombreNoTerminal() {
         return nombreNoTerminal;
     }
@@ -28,14 +34,14 @@ public class NoTerminal implements Simbolo {
     public void setNombreNoTerminal(String nombreNoTerminal) {
         this.nombreNoTerminal = nombreNoTerminal;
     }
-
-    public boolean isEsSimoboloInicial() {
-        return esSimoboloInicial;
-    }
-
-    public void setEsSimoboloInicial(boolean esSimoboloInicial) {
-        this.esSimoboloInicial = esSimoboloInicial;
-    }
+//
+//    public boolean isEsSimoboloInicial() {
+//        return esSimoboloInicial;
+//    }
+//
+//    public void setEsSimoboloInicial(boolean esSimoboloInicial) {
+//        this.esSimoboloInicial = esSimoboloInicial;
+//    }
 
     @Override
     public String obtenerSimbolo() {

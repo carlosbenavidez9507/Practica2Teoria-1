@@ -21,6 +21,15 @@ public class Produccion {
     private ArrayList<Simbolo> ladoDerecho;
     private boolean esSimoboloInicial;
 
+    public Produccion(NoTerminal ladoIzquierdo, ArrayList<Simbolo> ladoDerecho) {
+        this.ladoIzquierdo = ladoIzquierdo;
+        this.ladoDerecho = ladoDerecho;
+    }
+    
+    
+    
+    
+
     public Simbolo getIndex(int i) {
         return this.ladoDerecho.get(i);
     }
