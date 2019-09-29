@@ -77,12 +77,12 @@ public class Pratica2Teoria {
         ladoDerecho.add(NTB);
 
         ArrayList<Simbolo> ladoDerecho3 = new ArrayList<>();
-        ladoDerecho3.add(t3);
-        ladoDerecho3.add(NTB);
+//        ladoDerecho3.add(t3);
+//        ladoDerecho3.add(NTB);
 
         ArrayList<Simbolo> ladoDerecho2 = new ArrayList<>();
-        ladoDerecho2.add(t4);
-        ladoDerecho2.add(t2);
+        ladoDerecho2.add(t1);
+//        ladoDerecho2.add(t2);
         ladoDerecho2.add(NTA);
 
         ArrayList<Terminal> s1 = new ArrayList<>();
@@ -128,7 +128,7 @@ public class Pratica2Teoria {
         g.setPrdNoTerminales(aux);
 
 //        System.out.println(g.esGramaticaLL1());
-        System.out.println(g.esGramaticaS());
+        System.out.println(g.esGramaticaS(false));
 
     }
 

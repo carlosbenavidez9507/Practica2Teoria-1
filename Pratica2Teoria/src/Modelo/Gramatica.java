@@ -235,38 +235,61 @@ public class Gramatica {
         return true;
     }
 
-    public boolean esGramaticaS() {
+    public boolean esGramaticaS(boolean S) {//Si pregunta por S el valor de entrada es true
         int n = this.noTerminales.size();
         boolean sonIguales;
+        boolean hayProduccionNula = false;
         Simbolo aux;
         for (int j = 0; j < n; j++) {//recorrer el Array de NoTerminales que en cada posición contiene las producciones de esa terminal
             int[] produccionesTerminalJ = this.prdNoTerminales.get(j);//producciones por el No terminal j
             int m = produccionesTerminalJ.length;
             int i = 0;
             while (i < m) {
-                aux = this.producciones.get(produccionesTerminalJ[i]).getLadoDerecho().get(0);//obtiene el primer simbolo de la produccion i que se encuentra en producciones por no terminal j
-                if (!aux.esTerminal()) {
+                ArrayList<Simbolo> auxp = this.producciones.get(produccionesTerminalJ[i]).getLadoDerecho();
+                if (S && auxp.isEmpty()) {//Que aux sea vacio significa que hay una produccion nula
                     return false;
-                }
-                int k = 0;
-                Simbolo y;
-                while (k < m) {
-                    if (k != i) {
-                        y = this.producciones.get(produccionesTerminalJ[k]).getLadoDerecho().get(0);
-                        //Machetazo para comparar dos terminales con el metodo existente
-                        ArrayList<Terminal> auxT1 = new ArrayList<>();
-                        ArrayList<Terminal> auxT2 = new ArrayList<>();
-                        auxT1.add((Terminal) aux);
-                        auxT2.add((Terminal) y);
-                        sonIguales = this.tieneTerminalIgual(auxT1, auxT2);
-                        if (sonIguales) {
-                            return false;
-                        }
+                } else if (!auxp.isEmpty()) {
+                    aux = auxp.get(0);//obtiene el primer simbolo de la produccion i que se encuentra en producciones por no terminal j
+                    if (!aux.esTerminal()) {
+                        return false;
                     }
-                    k++;
+                    int k = 0;
+                    Simbolo y;
+                    while (k < m) {
+                        if (k != i) {
+                            ArrayList<Simbolo> auxy = this.producciones.get(produccionesTerminalJ[k]).getLadoDerecho();
+                            if (S && auxy.isEmpty()) {
+                                return false;
+                            } else if (!auxy.isEmpty()) {
+                                y = auxy.get(0);
+                                if (!y.esTerminal()) {
+                                    return false;
+                                }
+                                //Machetazo para comparar dos terminales con el metodo existente
+                                ArrayList<Terminal> auxT1 = new ArrayList<>();
+                                ArrayList<Terminal> auxT2 = new ArrayList<>();
+                                auxT1.add((Terminal) aux);
+                                auxT2.add((Terminal) y);
+                                sonIguales = this.tieneTerminalIgual(auxT1, auxT2);
+                                if (sonIguales) {
+                                    return false;
+                                }
+                            } else if (!S && auxp.isEmpty()) {
+                                hayProduccionNula = true;
+                            }
+                        }
+                        k++;
+                    }
+                } else if (!S && auxp.isEmpty()) {
+                    hayProduccionNula = true;
                 }
                 i++;
             }
+        }
+        if (hayProduccionNula && !S) {//Si hay produccion nula y se pregunta por Q
+            return true;
+        } else if (!hayProduccionNula && !S) {//Si no hay produccion nula y se pregunta por Q
+            return false;
         }
         return true;
     }
