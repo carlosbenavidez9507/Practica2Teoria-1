@@ -221,8 +221,7 @@ public class Gramatica {
         return true;
     }
 
-    public boolean esGramaticaLL1() {
-        //Determinar 
+    public boolean esGramaticaLL1() { 
         int n = this.noTerminales.size();
         boolean sonDisyuntos;
         for (int j = 0; j < n; j++) {//recorrer el Array de NoTerminales que en cada posición contiene las producciones de esa terminal
@@ -294,4 +293,13 @@ public class Gramatica {
         return true;
     }
 
+    public void actualizarEstado(){
+        int n=this.producciones.size();
+        Produccion x;
+        for(int i=0;i<n;i++){
+            x=this.producciones.get(i);
+            x.actualizarEstadoAnulable();
+        }
+        
+    }
 }

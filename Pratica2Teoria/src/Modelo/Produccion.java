@@ -25,10 +25,6 @@ public class Produccion {
         this.ladoIzquierdo = ladoIzquierdo;
         this.ladoDerecho = ladoDerecho;
     }
-    
-    
-    
-    
 
     public Simbolo getIndex(int i) {
         return this.ladoDerecho.get(i);
@@ -72,6 +68,33 @@ public class Produccion {
 
     public void setLadoDerecho(ArrayList<Simbolo> ladoDerecho) {
         this.ladoDerecho = ladoDerecho;
+    }
+
+    public boolean actualizarEstadoAnulable() {
+        Simbolo x;
+        int n = this.ladoDerecho.size();
+        boolean auxAnulable;
+        for (int i = 0; i < n; i++) {
+            x = this.ladoDerecho.get(i);
+            if (!x.esTerminal()) {
+                NoTerminal p = (NoTerminal) x;
+                if (p.isAnulable()) {
+                    auxAnulable = true;
+                } else {
+                    this.anulable = false;
+                    return false;
+                }
+            } else {
+                this.anulable = false;
+                return false;
+            }
+        }
+        //Si la produccion es anulable el lado izquierdo tambien
+        if(this.anulable){
+            this.ladoIzquierdo.setAnulable(this.anulable);
+        }
+
+        return this.anulable;
     }
 
 }

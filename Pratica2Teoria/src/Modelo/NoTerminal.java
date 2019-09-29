@@ -53,4 +53,18 @@ public class NoTerminal implements Simbolo {
         return false;
     }
 
+    public boolean isAnulable() {
+        return anulable;
+    }
+
+    public void setAnulable(boolean anulable) {
+        this.anulable = anulable;
+    }
+    
+    public void esAnulable(){
+        
+    }
+    
+    
+
 }

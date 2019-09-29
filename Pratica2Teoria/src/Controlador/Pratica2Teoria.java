@@ -127,7 +127,7 @@ public class Pratica2Teoria {
 
         g.setPrdNoTerminales(aux);
 
-//        System.out.println(g.esGramaticaLL1());
+//        System.out.println(g.esGramatic   aLL1());
         System.out.println(g.esGramaticaS(false));
 
     }
