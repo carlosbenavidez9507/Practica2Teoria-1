@@ -15,14 +15,35 @@ public class NoTerminal implements Simbolo {
 
     private String nombreNoTerminal;
     private boolean anulable;
-    private Primeros conjuntoPrimeros;
+    private ArrayList<Terminal> primeros;
     private ArrayList<Terminal> conjuntoSiguientes;
     private int indice;
     private boolean asignado;
+    private boolean primerosEncontrados;
 
     public int getIndice() {
         return indice;
     }
+
+    public boolean isPrimerosEncontrados() {
+        return primerosEncontrados;
+    }
+
+    public void setPrimerosEncontrados(boolean primerosEncontrados) {
+        this.primerosEncontrados = primerosEncontrados;
+    }
+    
+    
+
+    public ArrayList<Terminal> getPrimeros() {
+        return primeros;
+    }
+
+    public void setPrimeros(ArrayList<Terminal> primeros) {
+        this.primeros = primeros;
+    }
+    
+    
 
     public void setIndice(int indice) {
         this.indice = indice;
@@ -45,6 +66,8 @@ public class NoTerminal implements Simbolo {
         this.nombreNoTerminal = nombreNoTerminal;
         this.anulable=false;
         this.asignado=false;
+        this.primerosEncontrados=false;
+        this.primeros= new ArrayList<>();
     }
     
     

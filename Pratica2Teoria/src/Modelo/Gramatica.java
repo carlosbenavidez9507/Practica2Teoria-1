@@ -313,10 +313,6 @@ public class Gramatica {
             if (item.esTerminal()) {//Si el examinado es un terminal
                 p.setAnulable(false);//No es anulable
                 p.setAsignado(true);//Ya se asigno su estado
-                //LLAMAR METODO QUE RECORRE TODAS LA PRODUCCIONES DE ESE NOTERMINAL(lado izquierdo)
-//                this.reconocerNoTA(p.getLadoIzquierdo());
-//                p.getLadoIzquierdo().setAnulable(false);
-//                p.getLadoIzquierdo().setAsignado(true);
                 break; //Despues de que encuentre el primer no anulable 
 
             } else {//Si es un NoTerminal
@@ -334,7 +330,6 @@ public class Gramatica {
                         }
                     }
                 } else {
-                    System.out.println("Reconocer : " + p.getIndice());
                     this.reconocerNoTA(Nt); //Ya la asigno VUELVA A PREGUNTAR
                     if (!Nt.isAnulable()) {//No es anualbe
                         p.setAnulable(false);//Es anulable
@@ -344,13 +339,10 @@ public class Gramatica {
                         //LLAMAR METODO QUE RECORRE TODAS LA PRODUCCIONES DE ESE NOTERMINAL(lado derecho)
                         this.reconocerNoTA(Nt);
                     }//                    if(!Nt.isAnulable()){
-//                        
-//                    }
                 }
 
             }
         }
-        System.out.println("OtraParada");
         if (x) {
             p.setAnulable(true);
             p.setAsignado(true);
@@ -358,7 +350,7 @@ public class Gramatica {
 
     }
 
-    public void reconocerNoTA(NoTerminal Nt) { //Reconocer no terminal anulable
+    private void reconocerNoTA(NoTerminal Nt) { //Reconocer no terminal anulable
         int indice = Nt.getIndice(); //Tengo la posición del vector de indices de producciones en el Array de terminales
         int[] posiciones = this.prdNoTerminales.get(indice); // vector con indice de sus producciones
         //Recorrer cada produccion
@@ -382,7 +374,6 @@ public class Gramatica {
                     p.getLadoIzquierdo().setAsignado(true);
                 }
             }
-            System.out.println("para");
         }
         //Cuando termine el metodo ya habrá actualizado los estados
         Nt.setAsignado(true);
@@ -394,6 +385,64 @@ public class Gramatica {
         for (Produccion p : ps) {
             this.reconocerPA(p);
         }
+    }
+
+    public void calcularPrimeros(NoTerminal nt) {
+        int x = nt.getIndice(); //ubicación de sus producciones en el Array de producciones por NoTerminal
+        int[] indices = this.prdNoTerminales.get(x); //Indices de sus producciones
+        int k = 0;
+        int ip;
+        Produccion p;
+        Terminal t;
+        NoTerminal auxnt;
+        while (k < indices.length) {
+            ip = indices[k];//Indice de la produccion en k
+            p = this.producciones.get(ip);
+            for (Simbolo s : p.getLadoDerecho()) {
+                if (s != nt) {
+                    if (s.esTerminal()) {//Si es terminal agreguelo y termine
+                        t = (Terminal) s;
+                        nt.getPrimeros().add(t);
+                        nt.setPrimerosEncontrados(true);
+                        break;
+                    } else {//Si es NoTerminal
+                        auxnt = (NoTerminal) s;
+                        if (auxnt.isAnulable()) {
+                            if (auxnt.isPrimerosEncontrados()) {
+                                nt.getPrimeros().addAll(auxnt.getPrimeros());
+                            } else {
+                                this.calcularPrimeros(auxnt);
+                                auxnt.setPrimerosEncontrados(true);
+                                nt.getPrimeros().addAll(auxnt.getPrimeros());
+                            }
+                        } else {//No es anulable
+                            if (auxnt.isPrimerosEncontrados()) { //Si los tiene agreguelos
+                                nt.getPrimeros().addAll(auxnt.getPrimeros());
+                            } else {//Si nos los tiene calculelos y agreguelos
+                                this.calcularPrimeros(auxnt);
+                                auxnt.setPrimerosEncontrados(true);
+                                nt.getPrimeros().addAll(auxnt.getPrimeros());
+                            }
+                            break;
+
+                        }
+                    }
+                }
+            }
+            k++;
+        }
+    }
+
+    public void calcularPrimeros() {
+        ArrayList<NoTerminal> nts = this.noTerminales;
+        for (NoTerminal nt : nts) {
+            this.calcularPrimeros(nt);
+        }
+    }
+
+    public void calcularConjuntoSeleccion() {
+//        ArrayList<Produccion> p = this.producciones;
+        for(Produccion p:)
 
     }
 }

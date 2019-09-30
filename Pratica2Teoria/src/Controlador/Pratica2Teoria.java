@@ -73,6 +73,7 @@ public class Pratica2Teoria {
         noTerminales.add(NTA);
         noTerminales.add(NTB);
         noTerminales.add(NTC);
+        noTerminales.add(NTD);
 
         Terminal t1 = new Terminal("1");
         Terminal t2 = new Terminal("2");
@@ -87,6 +88,7 @@ public class Pratica2Teoria {
 
         ArrayList<Simbolo> ladoDerecho2 = new ArrayList<>();
         ladoDerecho2.add(NTA);
+        ladoDerecho2.add(t4);
         ladoDerecho2.add(NTB);
 
         ArrayList<Simbolo> ladoDerecho3 = new ArrayList<>();
@@ -151,7 +153,8 @@ public class Pratica2Teoria {
 //        g.reconocerPA(p4);
 
         g.definirAnulables();
-
+        g.calcularPrimeros();
+        
         System.out.println("probado");
     }
 
