@@ -27,7 +27,7 @@ public class Gramatica {
 
     public ArrayList<Terminal> getConjuntoSeleccion(int i) { //Obtener conjunto de seleccion de la produccion i 
         ArrayList<Terminal> conjuntoSeleccion;
-        conjuntoSeleccion = this.producciones.get(i).getConjuntoSeleccion(); //Obtener conjunto seleccion de la produccion "indiceProuccion"
+        conjuntoSeleccion = this.producciones.get(i).getConjuntoPrimerosProduccion(); //Obtener conjunto seleccion de la produccion "indiceProuccion"
         return conjuntoSeleccion;
     }
 
@@ -440,9 +440,29 @@ public class Gramatica {
         }
     }
 
-    public void calcularConjuntoSeleccion() {
-//        ArrayList<Produccion> p = this.producciones;
-        for(Produccion p:)
+    public void calcularPrimerosProduccion() {
+        ArrayList<Simbolo> ladoDerecho;
+        Terminal t;
+        NoTerminal nt;
+        for (Produccion p : this.producciones) {
+            ladoDerecho = p.getLadoDerecho();
+            for (Simbolo s : ladoDerecho) {
+                if (s.esTerminal()) {//Si es terminal agreguelo de inmediato y termine
+                    t = (Terminal) s;
+                    p.getConjuntoPrimerosProduccion().add(t);
+                    break;
+                } else { //Si es NoTerminal
+                    nt = (NoTerminal) s;
+                    p.getConjuntoPrimerosProduccion().addAll(nt.getPrimeros());
+                    if (!nt.isAnulable()) {//Si no es anulable añadir todos los primeros de nt y terminar
+                        break;
+                    }
+                    //Si es anulable solo añadir
 
+                }
+
+            }
+        }
     }
+
 }

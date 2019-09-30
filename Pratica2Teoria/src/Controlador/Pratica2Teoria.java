@@ -154,6 +154,7 @@ public class Pratica2Teoria {
 
         g.definirAnulables();
         g.calcularPrimeros();
+        g.calcularPrimerosProduccion();
         
         System.out.println("probado");
     }
