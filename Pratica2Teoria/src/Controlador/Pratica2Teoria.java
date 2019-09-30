@@ -61,75 +61,98 @@ public class Pratica2Teoria {
 //        System.out.println(g.esLinealPorDerecha());
 //Prueba de es Gramatica LL1
         NoTerminal NTA = new NoTerminal("<A>");
+        NTA.setIndice(0);
         NoTerminal NTB = new NoTerminal("<B>");
+        NTB.setIndice(1);
+        NoTerminal NTC = new NoTerminal("<C>");
+        NTC.setIndice(2);
+        NoTerminal NTD = new NoTerminal("<D>");
+        NTD.setIndice(3);
 
         ArrayList<NoTerminal> noTerminales = new ArrayList<>();
         noTerminales.add(NTA);
         noTerminales.add(NTB);
+        noTerminales.add(NTC);
 
         Terminal t1 = new Terminal("1");
         Terminal t2 = new Terminal("2");
         Terminal t3 = new Terminal("3");
         Terminal t4 = new Terminal("4");
 
-        ArrayList<Simbolo> ladoDerecho = new ArrayList<>();
-        ladoDerecho.add(t4);
-        ladoDerecho.add(NTB);
+        ArrayList<Simbolo> ladoDerecho0 = new ArrayList<>();
+        ladoDerecho0.add(NTC);
+        ladoDerecho0.add(NTA);
 
-        ArrayList<Simbolo> ladoDerecho3 = new ArrayList<>();
-//        ladoDerecho3.add(t3);
-//        ladoDerecho3.add(NTB);
+        ArrayList<Simbolo> ladoDerecho1 = new ArrayList<>();
 
         ArrayList<Simbolo> ladoDerecho2 = new ArrayList<>();
-        ladoDerecho2.add(t1);
-//        ladoDerecho2.add(t2);
         ladoDerecho2.add(NTA);
+        ladoDerecho2.add(NTB);
 
-        ArrayList<Terminal> s1 = new ArrayList<>();
-        s1.add(t1);
-        s1.add(t2);
-        s1.add(null);
+        ArrayList<Simbolo> ladoDerecho3 = new ArrayList<>();
 
-        ArrayList<Terminal> s2 = new ArrayList<>();
-        s2.add(t3);
-        s2.add(t4);
-        s1.add(null);
+        ArrayList<Simbolo> ladoDerecho4 = new ArrayList<>();
+        ladoDerecho4.add(t1);
 
-        Produccion p1 = new Produccion(NTA, ladoDerecho);
-        Produccion p2 = new Produccion(NTA, ladoDerecho2);
-        Produccion p3 = new Produccion(NTB, ladoDerecho);
-        Produccion p4 = new Produccion(NTB, ladoDerecho3);
-        p1.setConjuntoSeleccion(s1);
-        p2.setConjuntoSeleccion(s2);
+        ArrayList<Simbolo> ladoDerecho5 = new ArrayList<>();
+        ladoDerecho5.add(t2);
+        ladoDerecho5.add(NTB);
 
-//        Produccion p3 = new Produccion(NTB, ladoDerecho);
-//        Produccion p4 = new Produccion(NTB, ladoDerecho2);
+        Produccion p0 = new Produccion(NTA, ladoDerecho0, 0);
+        Produccion p1 = new Produccion(NTA, ladoDerecho1, 1);
+        p1.setAnulable(true);
+        p1.setAsignado(true);
+        NTA.setAnulable(true);
+        NTA.setAsignado(true);
+        Produccion p2 = new Produccion(NTB, ladoDerecho2, 2);
+        Produccion p3 = new Produccion(NTB, ladoDerecho3, 3);
+        p3.setAnulable(true);
+        p3.setAsignado(true);
+        NTB.setAnulable(true);
+        NTB.setAsignado(true);
+        Produccion p4 = new Produccion(NTC, ladoDerecho4, 4);
+        Produccion p5 = new Produccion(NTD, ladoDerecho5, 5);
+
         ArrayList<Produccion> producciones = new ArrayList<>();
+        producciones.add(p0);
         producciones.add(p1);
         producciones.add(p2);
         producciones.add(p3);
         producciones.add(p4);
+        producciones.add(p5);
 
         Gramatica g = new Gramatica(noTerminales, producciones);
 
-        int[] indexPT = new int[2];
-        indexPT[0] = 0;
-        indexPT[1] = 1;
-     
+        int[] indexNTA = new int[2];
+        indexNTA[0] = 0;
+        indexNTA[1] = 1;
 
-        int[] indexPT2 = new int[2];
-        indexPT2[0] = 2;
-        indexPT2[1] = 3;
+        int[] indexNTB = new int[2];
+        indexNTB[0] = 2;
+        indexNTB[1] = 3;
+
+        int[] indexNTC = new int[1];
+        indexNTC[0] = 4;
+
+        int[] indexNTD = new int[1];
+        indexNTD[0] = 5;
 
         ArrayList<int[]> aux = new ArrayList<>();
-        aux.add(indexPT);
-        aux.add(indexPT2);
+        aux.add(indexNTA);
+        aux.add(indexNTB);
+        aux.add(indexNTC);
+        aux.add(indexNTD);
 
         g.setPrdNoTerminales(aux);
+//        g.reconocerPA(p0);
+//        g.reconocerPA(p1);
+//        g.reconocerPA(p2);
+//        g.reconocerPA(p3);
+//        g.reconocerPA(p4);
 
-//        System.out.println(g.esGramatic   aLL1());
-        System.out.println(g.esGramaticaS(false));
+        g.definirAnulables();
 
+        System.out.println("probado");
     }
 
 }

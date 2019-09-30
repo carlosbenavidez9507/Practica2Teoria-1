@@ -20,10 +20,34 @@ public class Produccion {
     private NoTerminal ladoIzquierdo;
     private ArrayList<Simbolo> ladoDerecho;
     private boolean esSimoboloInicial;
+    private int indice;
+    private boolean asignado;
 
-    public Produccion(NoTerminal ladoIzquierdo, ArrayList<Simbolo> ladoDerecho) {
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }
+
+    public boolean isAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(boolean asignado) {
+        this.asignado = asignado;
+    }
+    
+    
+    
+
+    public Produccion(NoTerminal ladoIzquierdo, ArrayList<Simbolo> ladoDerecho, int indice) {
         this.ladoIzquierdo = ladoIzquierdo;
         this.ladoDerecho = ladoDerecho;
+        this.anulable=false;
+        this.asignado=false;
+        this.indice=indice;
     }
 
     public Simbolo getIndex(int i) {
@@ -90,7 +114,7 @@ public class Produccion {
             }
         }
         //Si la produccion es anulable el lado izquierdo tambien
-        if(this.anulable){
+        if (this.anulable) {
             this.ladoIzquierdo.setAnulable(this.anulable);
         }
 

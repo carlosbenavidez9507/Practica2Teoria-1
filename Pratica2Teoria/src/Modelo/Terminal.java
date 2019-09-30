@@ -14,12 +14,8 @@ public class Terminal implements Simbolo{
     private String nombreTermila;
     private boolean anulable; 
     private boolean actualizado;
-    
-    
 
-    public Terminal() {
-        this.actualizado=false;
-    }
+ 
 
     public Terminal(String nombreTermila) {
         this.nombreTermila = nombreTermila;

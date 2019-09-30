@@ -17,12 +17,34 @@ public class NoTerminal implements Simbolo {
     private boolean anulable;
     private Primeros conjuntoPrimeros;
     private ArrayList<Terminal> conjuntoSiguientes;
+    private int indice;
+    private boolean asignado;
+
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }
+
+    public boolean isAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(boolean asignado) {
+        this.asignado = asignado;
+    }
+    
+    
 
     public NoTerminal() {
     }
 
     public NoTerminal(String nombreNoTerminal) {
         this.nombreNoTerminal = nombreNoTerminal;
+        this.anulable=false;
+        this.asignado=false;
     }
     
     

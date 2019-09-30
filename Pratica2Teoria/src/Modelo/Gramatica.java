@@ -221,7 +221,7 @@ public class Gramatica {
         return true;
     }
 
-    public boolean esGramaticaLL1() { 
+    public boolean esGramaticaLL1() {
         int n = this.noTerminales.size();
         boolean sonDisyuntos;
         for (int j = 0; j < n; j++) {//recorrer el Array de NoTerminales que en cada posición contiene las producciones de esa terminal
@@ -293,13 +293,107 @@ public class Gramatica {
         return true;
     }
 
-    public void actualizarEstado(){
-        int n=this.producciones.size();
+    public void actualizarEstado() {
+        int n = this.producciones.size();
         Produccion x;
-        for(int i=0;i<n;i++){
-            x=this.producciones.get(i);
+        for (int i = 0; i < n; i++) {
+            x = this.producciones.get(i);
             x.actualizarEstadoAnulable();
         }
-        
+
+    }
+
+    public void reconocerPA(Produccion p) {//Reconocer terminales anulables para una Producción a la que no se le ha definido su estado
+        ArrayList<Simbolo> s = p.getLadoDerecho();
+        NoTerminal Nt;
+        boolean x = false;
+        int i = 0;
+        for (Simbolo item : s) {
+            i++;
+            if (item.esTerminal()) {//Si el examinado es un terminal
+                p.setAnulable(false);//No es anulable
+                p.setAsignado(true);//Ya se asigno su estado
+                //LLAMAR METODO QUE RECORRE TODAS LA PRODUCCIONES DE ESE NOTERMINAL(lado izquierdo)
+//                this.reconocerNoTA(p.getLadoIzquierdo());
+//                p.getLadoIzquierdo().setAnulable(false);
+//                p.getLadoIzquierdo().setAsignado(true);
+                break; //Despues de que encuentre el primer no anulable 
+
+            } else {//Si es un NoTerminal
+                Nt = (NoTerminal) item;
+                if (Nt.isAsignado()) { //Si a ese Notemrinal ya ha sido asignado su estado de anulable
+                    if (!Nt.isAnulable()) {//No es anualbe
+                        p.setAnulable(false);//Es anulable
+                        p.setAsignado(true);//Ya se asigno su estado
+                        break;
+                    } else {//Si es anulable
+                        //LLAMAR METODO QUE RECORRE TODAS LA PRODUCCIONES DE ESE NOTERMINAL(lado derecho)
+//                        this.reconocerNoTA(Nt);
+                        if (i == s.size()) { //Si llega al punto de que el ultimo es anulable estonces la producciones es anulable
+                            x = true;
+                        }
+                    }
+                } else {
+                    System.out.println("Reconocer : " + p.getIndice());
+                    this.reconocerNoTA(Nt); //Ya la asigno VUELVA A PREGUNTAR
+                    if (!Nt.isAnulable()) {//No es anualbe
+                        p.setAnulable(false);//Es anulable
+                        p.setAsignado(true);//Ya se asigno su estado
+                        break;
+                    } else {//Si no  ha sido asignaod
+                        //LLAMAR METODO QUE RECORRE TODAS LA PRODUCCIONES DE ESE NOTERMINAL(lado derecho)
+                        this.reconocerNoTA(Nt);
+                    }//                    if(!Nt.isAnulable()){
+//                        
+//                    }
+                }
+
+            }
+        }
+        System.out.println("OtraParada");
+        if (x) {
+            p.setAnulable(true);
+            p.setAsignado(true);
+        }
+
+    }
+
+    public void reconocerNoTA(NoTerminal Nt) { //Reconocer no terminal anulable
+        int indice = Nt.getIndice(); //Tengo la posición del vector de indices de producciones en el Array de terminales
+        int[] posiciones = this.prdNoTerminales.get(indice); // vector con indice de sus producciones
+        //Recorrer cada produccion
+        int n = posiciones.length; //cantidad de producciones asociadas
+        int k; //posicion real de la produccion en la gramatica
+        Produccion p; //Produccion k;
+        for (int i = 0; i < n; i++) {
+            k = posiciones[i]; //Obtengo la posicion produccion k
+            p = this.producciones.get(k);
+            if (p.isAsignado()) {//Si ya se le ha asignado su estado
+                if (p.isAnulable()) {//Si ese estado es anulable
+                    p.getLadoIzquierdo().setAnulable(true);
+                    p.getLadoIzquierdo().setAsignado(true);
+                }
+            } else {//No se le ha asignado su estado a esta produccion
+                //Asingar estado
+                this.reconocerPA(p);//Se asigna su estado
+                //volver a preguntar
+                if (p.isAnulable()) {//Si ese estado de p es anulable su lado izquierdo tambien
+                    p.getLadoIzquierdo().setAnulable(true);
+                    p.getLadoIzquierdo().setAsignado(true);
+                }
+            }
+            System.out.println("para");
+        }
+        //Cuando termine el metodo ya habrá actualizado los estados
+        Nt.setAsignado(true);
+
+    }
+
+    public void definirAnulables() {
+        ArrayList<Produccion> ps = this.producciones;
+        for (Produccion p : ps) {
+            this.reconocerPA(p);
+        }
+
     }
 }
