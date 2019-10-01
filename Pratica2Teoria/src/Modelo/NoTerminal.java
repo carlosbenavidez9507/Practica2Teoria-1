@@ -16,11 +16,30 @@ public class NoTerminal implements Simbolo {
     private String nombreNoTerminal;
     private boolean anulable;
     private ArrayList<Terminal> primeros;
-    private ArrayList<Terminal> conjuntoSiguientes;
     private int indice;
     private boolean asignado;
     private boolean primerosEncontrados;
+    private boolean haySiguientes;
+    private ArrayList<Terminal> conjuntoSiguientes;
 
+    public boolean isHaySiguientes() {
+        return haySiguientes;
+    }
+
+    public void setHaySiguientes(boolean haySiguientes) {
+        this.haySiguientes = haySiguientes;
+    }
+
+    public ArrayList<Terminal> getConjuntoSiguientes() {
+        return conjuntoSiguientes;
+    }
+
+    public void setConjuntoSiguientes(ArrayList<Terminal> conjuntoSiguientes) {
+        this.conjuntoSiguientes = conjuntoSiguientes;
+    }
+
+    
+    
     public int getIndice() {
         return indice;
     }
@@ -32,8 +51,6 @@ public class NoTerminal implements Simbolo {
     public void setPrimerosEncontrados(boolean primerosEncontrados) {
         this.primerosEncontrados = primerosEncontrados;
     }
-    
-    
 
     public ArrayList<Terminal> getPrimeros() {
         return primeros;
@@ -42,8 +59,6 @@ public class NoTerminal implements Simbolo {
     public void setPrimeros(ArrayList<Terminal> primeros) {
         this.primeros = primeros;
     }
-    
-    
 
     public void setIndice(int indice) {
         this.indice = indice;
@@ -56,21 +71,19 @@ public class NoTerminal implements Simbolo {
     public void setAsignado(boolean asignado) {
         this.asignado = asignado;
     }
-    
-    
 
     public NoTerminal() {
     }
 
     public NoTerminal(String nombreNoTerminal) {
         this.nombreNoTerminal = nombreNoTerminal;
-        this.anulable=false;
-        this.asignado=false;
-        this.primerosEncontrados=false;
-        this.primeros= new ArrayList<>();
+        this.anulable = false;
+        this.asignado = false;
+        this.primerosEncontrados = false;
+        this.primeros = new ArrayList<>();
+        this.conjuntoSiguientes= new ArrayList<>();
+        this.haySiguientes=false;
     }
-    
-    
 
     public String getNombreNoTerminal() {
         return nombreNoTerminal;
@@ -105,11 +118,9 @@ public class NoTerminal implements Simbolo {
     public void setAnulable(boolean anulable) {
         this.anulable = anulable;
     }
-    
-    public void esAnulable(){
-        
+
+    public void esAnulable() {
+
     }
-    
-    
 
 }

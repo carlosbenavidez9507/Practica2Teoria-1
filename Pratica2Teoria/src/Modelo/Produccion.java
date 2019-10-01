@@ -16,6 +16,7 @@ public class Produccion {
     private boolean anulable;
     private Primeros conjuntoPrimeros;
     private ArrayList<Terminal> conjuntoPrimerosProduccion;
+    
 
     private NoTerminal ladoIzquierdo;
     private ArrayList<Simbolo> ladoDerecho;
@@ -23,6 +24,7 @@ public class Produccion {
     private int indice;
     private boolean asignado;
 
+    
     public int getIndice() {
         return indice;
     }
@@ -38,17 +40,14 @@ public class Produccion {
     public void setAsignado(boolean asignado) {
         this.asignado = asignado;
     }
-    
-    
-    
 
     public Produccion(NoTerminal ladoIzquierdo, ArrayList<Simbolo> ladoDerecho, int indice) {
         this.ladoIzquierdo = ladoIzquierdo;
         this.ladoDerecho = ladoDerecho;
-        this.anulable=false;
-        this.asignado=false;
-        this.indice=indice;
-        this.conjuntoPrimerosProduccion= new ArrayList<>();
+        this.anulable = false;
+        this.asignado = false;
+        this.indice = indice;
+        this.conjuntoPrimerosProduccion = new ArrayList<>();
     }
 
     public Simbolo getIndex(int i) {

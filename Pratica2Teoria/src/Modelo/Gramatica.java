@@ -465,4 +465,67 @@ public class Gramatica {
         }
     }
 
+//    public void calcularSiguientes(){
+//        ArrayList<Produccion> ps = this.producciones;
+//        ArrayList<Simbolo> ladoDerecho;
+//        ArrayList<Terminal> ts;
+//        Terminal t;
+//        int i;
+//        for(Produccion p: ps){
+//            ladoDerecho = p.getLadoDerecho();
+//            i=0;
+//            while(i<ladoDerecho.size()){
+//                t= (Terminal) ladoDerecho.get(i);
+//                if(i==ladoDerecho.size()-1){//Si es el ultimo
+//                    if(){}
+//                    
+//                    
+//                                    
+//                }
+//            }
+//        }
+//    }
+    public void calcularSiguientes(NoTerminal t) {
+        ArrayList<Produccion> ps = this.producciones;
+        ArrayList<Simbolo> ladoDerecho;
+        NoTerminal ladoIzquierdo;
+        ArrayList<Terminal> ts;
+        NoTerminal x;
+        Simbolo proximo;
+        int i;
+        for (Produccion p : ps) {
+            ladoDerecho = p.getLadoDerecho();
+            i = 0;
+            while (i < ladoDerecho.size()) {
+                if (!ladoDerecho.get(i).esTerminal()) {//Si es un NoTerminal
+                    if ((NoTerminal) ladoDerecho.get(i) == t) { //Si es el buscado 
+                        ladoIzquierdo = p.getLadoIzquierdo();
+                        if (i == ladoDerecho.size() - 1 && ladoIzquierdo != t) {//Si es el ultimo
+                            calcularSiguientes(ladoIzquierdo);
+                            t.getConjuntoSiguientes().addAll(ladoIzquierdo.getConjuntoSiguientes());
+                        }
+                        if (ladoIzquierdo != t) {
+                            proximo = ladoDerecho.get(i + 1);
+                            if (proximo.esTerminal()) { //Si es un terminal agreguelo
+                                t.getConjuntoSiguientes().add((Terminal) proximo);
+                            } else {//Si no es un NoTerminal
+                                x = (NoTerminal) proximo;
+                                if (x.isHaySiguientes()) {
+                                    t.getConjuntoSiguientes().addAll(x.getConjuntoSiguientes()); //Agregar los siguientes
+                                } else {//Si aun no se han calculado, calcularlos
+                                    this.calcularSiguientes(x);
+                                    t.getConjuntoSiguientes().addAll(x.getConjuntoSiguientes()); //Agregar los siguientes
+                                }
+                            }
+                        }
+
+                    }
+                }
+                i++;
+            }
+            t.setHaySiguientes(true);
+        }
+
+    }
+
 }

@@ -155,7 +155,11 @@ public class Pratica2Teoria {
         g.definirAnulables();
         g.calcularPrimeros();
         g.calcularPrimerosProduccion();
-        
+        g.calcularSiguientes(NTA);
+        g.calcularSiguientes(NTB);
+        g.calcularSiguientes(NTC);
+        g.calcularSiguientes(NTD);
+
         System.out.println("probado");
     }
 
