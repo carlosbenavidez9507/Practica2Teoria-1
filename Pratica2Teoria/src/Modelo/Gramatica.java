@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -412,6 +413,7 @@ public class Gramatica {
                                 nt.getPrimeros().addAll(auxnt.getPrimeros());
                             } else {
                                 this.calcularPrimeros(auxnt);
+                                this.eliminarRepetidos(auxnt.getPrimeros());
                                 auxnt.setPrimerosEncontrados(true);
                                 nt.getPrimeros().addAll(auxnt.getPrimeros());
                             }
@@ -420,6 +422,7 @@ public class Gramatica {
                                 nt.getPrimeros().addAll(auxnt.getPrimeros());
                             } else {//Si nos los tiene calculelos y agreguelos
                                 this.calcularPrimeros(auxnt);
+                                this.eliminarRepetidos(auxnt.getPrimeros());
                                 auxnt.setPrimerosEncontrados(true);
                                 nt.getPrimeros().addAll(auxnt.getPrimeros());
                             }
@@ -450,10 +453,12 @@ public class Gramatica {
                 if (s.esTerminal()) {//Si es terminal agreguelo de inmediato y termine
                     t = (Terminal) s;
                     p.getConjuntoPrimerosProduccion().add(t);
+                    this.eliminarRepetidos(p.getConjuntoPrimerosProduccion());
                     break;
                 } else { //Si es NoTerminal
                     nt = (NoTerminal) s;
                     p.getConjuntoPrimerosProduccion().addAll(nt.getPrimeros());
+                    this.eliminarRepetidos(p.getConjuntoPrimerosProduccion());
                     if (!nt.isAnulable()) {//Si no es anulable añadir todos los primeros de nt y terminar
                         break;
                     }
@@ -485,9 +490,9 @@ public class Gramatica {
 //            }
 //        }
 //    }
-    
-    boolean band=true;
-    public void calcularSiguiente(NoTerminal t) {
+    boolean band = true;
+
+    private void calcularSiguiente(NoTerminal t) {
         ArrayList<Produccion> ps = this.producciones;
         ArrayList<Simbolo> ladoDerecho;
         NoTerminal ladoIzquierdo;
@@ -502,7 +507,7 @@ public class Gramatica {
                 if (!ladoDerecho.get(i).esTerminal()) {//Si es un NoTerminal
                     if ((NoTerminal) ladoDerecho.get(i) == t) { //Si es el buscado 
                         if (t.isEsSimoboloInicial() && band) {
-                            band=false;
+                            band = false;
                             Terminal te = new Terminal("vacio");
                             t.getConjuntoSiguientes().add(te);
                         }
@@ -510,6 +515,7 @@ public class Gramatica {
                         if (i == ladoDerecho.size() - 1 && ladoIzquierdo != t) {//Si es el ultimo
                             calcularSiguiente(ladoIzquierdo);
                             t.getConjuntoSiguientes().addAll(ladoIzquierdo.getConjuntoSiguientes());
+                            this.eliminarRepetidos(ladoIzquierdo.getConjuntoSiguientes());
                         }
                         if (ladoIzquierdo != t && i != ladoDerecho.size() - 1) {
                             proximo = ladoDerecho.get(i + 1);
@@ -522,6 +528,7 @@ public class Gramatica {
                                         t.getConjuntoSiguientes().addAll(x.getConjuntoSiguientes()); //Agregar los siguientes
                                     } else {//Si aun no se han calculado, calcularlos
                                         this.calcularSiguiente(x);
+                                        this.eliminarRepetidos(x.getConjuntoSiguientes());
                                         t.getConjuntoSiguientes().addAll(x.getConjuntoSiguientes()); //Agregar los siguientes
                                     }
                                 } else {//Si no es anulable entonces solo agregar sus primeros
@@ -543,6 +550,32 @@ public class Gramatica {
         for (NoTerminal p : ps) {
             this.calcularSiguiente(p);
         }
+    }
+
+    public void construirConjuntoSeleccion() {
+        ArrayList<Produccion> ps = this.producciones;
+        for (Produccion p : ps) {
+            this.conjuntoSeleccion(p);
+        }
+    }
+
+    private void conjuntoSeleccion(Produccion p) {
+        int k = p.getIndice();
+        NoTerminal ladoIzquierdo;
+        ladoIzquierdo = p.getLadoIzquierdo();
+        if (!p.isAnulable()) {
+            p.getConjuntoSeleccion().addAll(p.getConjuntoPrimerosProduccion());
+        } else {
+            p.getConjuntoSeleccion().addAll(p.getConjuntoPrimerosProduccion());
+            p.getConjuntoSeleccion().addAll(ladoIzquierdo.getConjuntoSiguientes());
+        }
+    }
+
+    public void eliminarRepetidos(ArrayList p) {
+        HashSet hs = new HashSet();
+        hs.addAll(p);
+        p.clear();
+        p.addAll(hs);
     }
 
 }

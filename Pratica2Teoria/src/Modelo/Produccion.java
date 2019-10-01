@@ -16,6 +16,7 @@ public class Produccion {
     private boolean anulable;
     private Primeros conjuntoPrimeros;
     private ArrayList<Terminal> conjuntoPrimerosProduccion;
+    private ArrayList<Terminal> conjuntoSeleccion;
     
 
     private NoTerminal ladoIzquierdo;
@@ -23,6 +24,14 @@ public class Produccion {
     private int indice;
     private boolean asignado;
 
+    public ArrayList<Terminal> getConjuntoSeleccion() {
+        return conjuntoSeleccion;
+    }
+
+    public void setConjuntoSeleccion(ArrayList<Terminal> conjuntoSeleccion) {
+        this.conjuntoSeleccion = conjuntoSeleccion;
+    }
+    
     
     public int getIndice() {
         return indice;
@@ -47,6 +56,7 @@ public class Produccion {
         this.asignado = false;
         this.indice = indice;
         this.conjuntoPrimerosProduccion = new ArrayList<>();
+        this.conjuntoSeleccion= new ArrayList<>();
     }
 
     public Simbolo getIndex(int i) {

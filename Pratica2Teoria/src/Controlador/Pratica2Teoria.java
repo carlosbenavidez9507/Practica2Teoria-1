@@ -11,6 +11,7 @@ import Modelo.Produccion;
 import Modelo.Simbolo;
 import Modelo.Terminal;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -158,10 +159,12 @@ public class Pratica2Teoria {
         g.calcularPrimeros();
         g.calcularPrimerosProduccion();
         g.calcularSiguientes();
-//        g.calcularSiguientes(NTB);
-//        g.calcularSiguientes(NTC);
-//        g.calcularSiguientes(NTD);
+        g.construirConjuntoSeleccion();
 
+//        HashSet hs = new HashSet();
+//        hs.addAll(g.getProducciones().get(0).getConjuntoSeleccion());
+//        g.getProducciones().get(0).getConjuntoSeleccion().clear();
+//        g.getProducciones().get(0).getConjuntoSeleccion().addAll(hs);
         System.out.println("probado");
     }
 
