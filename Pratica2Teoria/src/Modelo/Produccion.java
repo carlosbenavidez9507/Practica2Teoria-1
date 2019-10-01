@@ -20,7 +20,6 @@ public class Produccion {
 
     private NoTerminal ladoIzquierdo;
     private ArrayList<Simbolo> ladoDerecho;
-    private boolean esSimoboloInicial;
     private int indice;
     private boolean asignado;
 

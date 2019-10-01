@@ -21,7 +21,16 @@ public class NoTerminal implements Simbolo {
     private boolean primerosEncontrados;
     private boolean haySiguientes;
     private ArrayList<Terminal> conjuntoSiguientes;
+    private boolean esSimoboloInicial;
 
+    public boolean isEsSimoboloInicial() {
+        return esSimoboloInicial;
+    }
+
+    public void setEsSimoboloInicial(boolean esSimoboloInicial) {
+        this.esSimoboloInicial = esSimoboloInicial;
+    }
+    
     public boolean isHaySiguientes() {
         return haySiguientes;
     }
@@ -38,8 +47,6 @@ public class NoTerminal implements Simbolo {
         this.conjuntoSiguientes = conjuntoSiguientes;
     }
 
-    
-    
     public int getIndice() {
         return indice;
     }
@@ -81,8 +88,9 @@ public class NoTerminal implements Simbolo {
         this.asignado = false;
         this.primerosEncontrados = false;
         this.primeros = new ArrayList<>();
-        this.conjuntoSiguientes= new ArrayList<>();
-        this.haySiguientes=false;
+        this.conjuntoSiguientes = new ArrayList<>();
+        this.haySiguientes = false;
+        this.esSimoboloInicial = false;
     }
 
     public String getNombreNoTerminal() {

@@ -62,6 +62,7 @@ public class Pratica2Teoria {
 //Prueba de es Gramatica LL1
         NoTerminal NTA = new NoTerminal("<A>");
         NTA.setIndice(0);
+        NTA.setEsSimoboloInicial(true);
         NoTerminal NTB = new NoTerminal("<B>");
         NTB.setIndice(1);
         NoTerminal NTC = new NoTerminal("<C>");
@@ -81,8 +82,8 @@ public class Pratica2Teoria {
         Terminal t4 = new Terminal("4");
 
         ArrayList<Simbolo> ladoDerecho0 = new ArrayList<>();
-        ladoDerecho0.add(NTC);
         ladoDerecho0.add(NTA);
+        ladoDerecho0.add(NTD);
 
         ArrayList<Simbolo> ladoDerecho1 = new ArrayList<>();
 
@@ -99,6 +100,7 @@ public class Pratica2Teoria {
         ArrayList<Simbolo> ladoDerecho5 = new ArrayList<>();
         ladoDerecho5.add(t2);
         ladoDerecho5.add(NTB);
+        ladoDerecho5.add(NTC);
 
         Produccion p0 = new Produccion(NTA, ladoDerecho0, 0);
         Produccion p1 = new Produccion(NTA, ladoDerecho1, 1);
@@ -155,10 +157,10 @@ public class Pratica2Teoria {
         g.definirAnulables();
         g.calcularPrimeros();
         g.calcularPrimerosProduccion();
-        g.calcularSiguientes(NTA);
-        g.calcularSiguientes(NTB);
-        g.calcularSiguientes(NTC);
-        g.calcularSiguientes(NTD);
+        g.calcularSiguientes();
+//        g.calcularSiguientes(NTB);
+//        g.calcularSiguientes(NTC);
+//        g.calcularSiguientes(NTD);
 
         System.out.println("probado");
     }

@@ -485,7 +485,9 @@ public class Gramatica {
 //            }
 //        }
 //    }
-    public void calcularSiguientes(NoTerminal t) {
+    
+    boolean band=true;
+    public void calcularSiguiente(NoTerminal t) {
         ArrayList<Produccion> ps = this.producciones;
         ArrayList<Simbolo> ladoDerecho;
         NoTerminal ladoIzquierdo;
@@ -499,33 +501,48 @@ public class Gramatica {
             while (i < ladoDerecho.size()) {
                 if (!ladoDerecho.get(i).esTerminal()) {//Si es un NoTerminal
                     if ((NoTerminal) ladoDerecho.get(i) == t) { //Si es el buscado 
+                        if (t.isEsSimoboloInicial() && band) {
+                            band=false;
+                            Terminal te = new Terminal("vacio");
+                            t.getConjuntoSiguientes().add(te);
+                        }
                         ladoIzquierdo = p.getLadoIzquierdo();
                         if (i == ladoDerecho.size() - 1 && ladoIzquierdo != t) {//Si es el ultimo
-                            calcularSiguientes(ladoIzquierdo);
+                            calcularSiguiente(ladoIzquierdo);
                             t.getConjuntoSiguientes().addAll(ladoIzquierdo.getConjuntoSiguientes());
                         }
-                        if (ladoIzquierdo != t) {
+                        if (ladoIzquierdo != t && i != ladoDerecho.size() - 1) {
                             proximo = ladoDerecho.get(i + 1);
                             if (proximo.esTerminal()) { //Si es un terminal agreguelo
                                 t.getConjuntoSiguientes().add((Terminal) proximo);
-                            } else {//Si no es un NoTerminal
+                            } else {//Si no es un NoTerminal preguntar si es anulable
                                 x = (NoTerminal) proximo;
-                                if (x.isHaySiguientes()) {
-                                    t.getConjuntoSiguientes().addAll(x.getConjuntoSiguientes()); //Agregar los siguientes
-                                } else {//Si aun no se han calculado, calcularlos
-                                    this.calcularSiguientes(x);
-                                    t.getConjuntoSiguientes().addAll(x.getConjuntoSiguientes()); //Agregar los siguientes
+                                if (x.isAnulable()) {//Si es anulable agregar sus primeros y siguientes
+                                    if (x.isHaySiguientes()) {//Si ya existen sus siguientes
+                                        t.getConjuntoSiguientes().addAll(x.getConjuntoSiguientes()); //Agregar los siguientes
+                                    } else {//Si aun no se han calculado, calcularlos
+                                        this.calcularSiguiente(x);
+                                        t.getConjuntoSiguientes().addAll(x.getConjuntoSiguientes()); //Agregar los siguientes
+                                    }
+                                } else {//Si no es anulable entonces solo agregar sus primeros
+                                    t.getConjuntoSiguientes().addAll(x.getPrimeros()); //Agregar los siguientes
                                 }
+
                             }
                         }
-
                     }
                 }
                 i++;
             }
-            t.setHaySiguientes(true);
         }
+        t.setHaySiguientes(true);
+    }
 
+    public void calcularSiguientes() {
+        ArrayList<NoTerminal> ps = this.noTerminales;
+        for (NoTerminal p : ps) {
+            this.calcularSiguiente(p);
+        }
     }
 
 }
